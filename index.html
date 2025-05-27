@@ -42,12 +42,69 @@
     <!-- ░░ Trailer ░░ -->
     <section class="trailer-section">
       <div class="video-wrapper">
-        <iframe
-          src="https://www.youtube.com/embed/BGR0M8OaaL8?si=-TTBQLcEkNZaOEUq"
-          title="Demo Day Trailer"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
-        ></iframe>
+        <div class="custom-video-player">
+          <video id="demoVideo" preload="metadata" poster="">
+            <source src="assets/Trailer.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          
+          <!-- Custom Video Controls -->
+          <div class="video-controls">
+            <div class="play-pause-overlay" id="playPauseOverlay">
+              <div class="play-button" id="playButton">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M8 5v14l11-7z" fill="currentColor"/>
+                </svg>
+              </div>
+            </div>
+            
+            <div class="controls-bar">
+              <div class="progress-container">
+                <div class="progress-bar" id="progressBar">
+                  <div class="progress-fill" id="progressFill"></div>
+                  <div class="progress-handle" id="progressHandle"></div>
+                </div>
+              </div>
+              
+              <div class="control-buttons">
+                <button class="control-btn play-pause-btn" id="playPauseBtn">
+                  <svg class="play-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="M8 5v14l11-7z" fill="currentColor"/>
+                  </svg>
+                  <svg class="pause-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" style="display: none;">
+                    <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" fill="currentColor"/>
+                  </svg>
+                </button>
+                
+                <div class="time-display">
+                  <span id="currentTime">0:00</span>
+                  <span class="time-separator">/</span>
+                  <span id="duration">0:00</span>
+                </div>
+                
+                <div class="volume-control">
+                  <button class="control-btn volume-btn" id="volumeBtn">
+                    <svg class="volume-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                      <path d="M3 9v6h4l5 5V4l-5 5H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" fill="currentColor"/>
+                    </svg>
+                  </button>
+                  <div class="volume-slider-container" id="volumeSliderContainer">
+                    <div class="volume-slider" id="volumeSlider">
+                      <div class="volume-fill" id="volumeFill"></div>
+                      <div class="volume-handle" id="volumeHandle"></div>
+                    </div>
+                  </div>
+                </div>
+                
+                <button class="control-btn fullscreen-btn" id="fullscreenBtn">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z" fill="currentColor"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <a
         href="https://lu.ma/mjtnuoun"
