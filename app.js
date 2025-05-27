@@ -168,6 +168,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let isPlaying = false;
   let controlsTimeout;
+  let hasPlayedOnce = false; // Track if video has been played at least once
+
+  // Initialize video controls state (paused by default)
+  videoControls.classList.add('paused');
 
   // Format time helper function
   function formatTime(seconds) {
@@ -181,13 +185,21 @@ document.addEventListener('DOMContentLoaded', () => {
     if (video.paused) {
       video.play();
       isPlaying = true;
+      hasPlayedOnce = true;
       playPauseOverlay.classList.add('hidden');
+      videoControls.classList.remove('paused');
       document.querySelector('.play-icon').style.display = 'none';
       document.querySelector('.pause-icon').style.display = 'block';
+      
+      // Remove poster after first play to prevent it from showing again
+      if (hasPlayedOnce) {
+        video.removeAttribute('poster');
+      }
     } else {
       video.pause();
       isPlaying = false;
       playPauseOverlay.classList.remove('hidden');
+      videoControls.classList.add('paused');
       document.querySelector('.play-icon').style.display = 'block';
       document.querySelector('.pause-icon').style.display = 'none';
     }
@@ -211,13 +223,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Show/hide controls with timeout
   function showControls() {
-    videoControls.classList.add('visible');
-    clearTimeout(controlsTimeout);
-    
-    if (isPlaying) {
-      controlsTimeout = setTimeout(() => {
-        videoControls.classList.remove('visible');
-      }, 3000);
+    if (!videoControls.classList.contains('paused')) {
+      videoControls.classList.add('visible');
+      clearTimeout(controlsTimeout);
+      
+      if (isPlaying) {
+        controlsTimeout = setTimeout(() => {
+          videoControls.classList.remove('visible');
+        }, 3000);
+      }
     }
   }
 
@@ -336,6 +350,7 @@ document.addEventListener('DOMContentLoaded', () => {
   video.addEventListener('ended', () => {
     isPlaying = false;
     playPauseOverlay.classList.remove('hidden');
+    videoControls.classList.add('paused');
     document.querySelector('.play-icon').style.display = 'block';
     document.querySelector('.pause-icon').style.display = 'none';
     videoControls.classList.add('visible');
@@ -467,7 +482,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Initial setup
-  showControls();
+  videoControls.classList.add('visible'); // Show controls initially for paused state
   updateVolumeSlider();
   updateVolumeIcon();
 });

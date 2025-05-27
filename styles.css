@@ -239,6 +239,19 @@ body {
   pointer-events: all;
 }
 
+/* Hide controls bar when video is not playing */
+.video-controls.paused .controls-bar {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+/* Always show play button overlay when paused */
+.video-controls.paused .play-pause-overlay {
+  opacity: 1;
+  pointer-events: all;
+}
+
 /* Play/Pause Overlay */
 .play-pause-overlay {
   position: absolute;
@@ -1021,11 +1034,11 @@ footer {
 .guest-card.more-guests {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  align-items: flex-start;
+  text-align: left;
+  padding: 1.75rem 1.5rem;
+  min-height: 0;
   background: var(--bg-card);
-  min-height: 250px;
 }
 
 .more-guests-image {
@@ -1039,17 +1052,18 @@ footer {
 }
 
 .more-guests-text {
-  font-size: 1rem;
-  color: var(--text-secondary);
-  max-width: 240px;
-  line-height: 1.4;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.3rem;
+  letter-spacing: -0.01em;
 }
 
 .more-guests-roles {
-  margin-top: 0.875rem;
+  margin-top: 0;
   font-size: 0.875rem;
   color: var(--text-muted);
-  max-width: 220px;
+  line-height: 1.4;
 }
 
 .guest-card.more-guests:hover,
