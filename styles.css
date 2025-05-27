@@ -338,7 +338,7 @@ body {
 }
 .social a {
   color: var(--text-secondary);
-  font-size: 1rem;
+  font-size: 1.25rem;
   transition: var(--transition-smooth);
 }
 .social a:hover {
@@ -434,7 +434,7 @@ body {
 }
 .social-links a {
   color: var(--text-secondary);
-  font-size: 1.125rem;
+  font-size: 1.375rem;
   transition: var(--transition-smooth);
   border-bottom: none;
   padding: 0.5rem;
@@ -608,4 +608,50 @@ footer {
     bottom: 1rem;
     right: 1rem;
   }
+}
+
+/* ---- More Guests Teaser Card ---- */
+.guest-card.more-guests {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: var(--bg-card);
+  min-height: 280px;
+}
+
+.more-guests-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 1.25rem;
+  filter: grayscale(90%);
+  transition: var(--transition-smooth);
+  object-fit: cover;
+}
+
+.more-guests-text {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  max-width: 240px;
+  line-height: 1.4;
+}
+
+.more-guests-roles {
+  margin-top: 1rem;
+  font-size: 0.9375rem;
+  color: var(--text-muted);
+  max-width: 220px;
+}
+
+.guest-card.more-guests:hover,
+.guest-card.more-guests.touched {
+  transform: translateY(-5px);
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.guest-card.more-guests:hover .more-guests-image,
+.guest-card.more-guests.touched .more-guests-image {
+  filter: grayscale(0%);
 }
