@@ -107,3 +107,39 @@ buttons.forEach(button => {
     });
   }
 });
+
+// Touch support for guest cards
+const guestCards = document.querySelectorAll('.guest-card');
+const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+// Handle touch events for guest cards
+if (isTouchDevice) {
+  guestCards.forEach(card => {
+    // Touch start - add active state
+    card.addEventListener('touchstart', function(e) {
+      // Don't prevent default to allow links to work
+      this.classList.add('touched');
+    });
+
+    // Remove active state when touching elsewhere
+    document.addEventListener('touchstart', function(e) {
+      if (!e.target.closest('.guest-card')) {
+        guestCards.forEach(c => c.classList.remove('touched'));
+      }
+    });
+    
+    // Handle touch end on the card itself
+    card.addEventListener('touchend', function(e) {
+      // If they're tapping a link, let it work normally
+      if (e.target.tagName === 'A' || e.target.closest('a')) {
+        return;
+      }
+      
+      // Otherwise, toggle the touched state
+      if (this.classList.contains('touched')) {
+        // Keep the touched state for visual feedback
+        e.preventDefault(); // Prevent simulated mouse events
+      }
+    });
+  });
+}

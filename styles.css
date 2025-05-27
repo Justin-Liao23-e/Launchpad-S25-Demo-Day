@@ -294,12 +294,15 @@ body {
   position: relative;
   opacity: 0;
   transform: translateY(30px);
+  cursor: pointer; /* Added for better touch indication */
+  -webkit-tap-highlight-color: transparent; /* Remove default mobile tap highlight */
 }
 .guest-card.appear {
   opacity: 1;
   transform: translateY(0);
 }
-.guest-card:hover { 
+.guest-card:hover, 
+.guest-card.touched { 
   transform: translateY(-5px);
   background: rgba(0, 0, 0, 0.04);
 }
@@ -312,7 +315,8 @@ body {
   filter: grayscale(90%);
   transition: var(--transition-smooth);
 }
-.guest-card:hover img {
+.guest-card:hover img,
+.guest-card.touched img {
   filter: grayscale(0%);
 }
 .guest-card h3 { 
