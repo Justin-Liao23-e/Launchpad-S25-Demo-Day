@@ -369,12 +369,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const errorMessage = document.createElement('div');
     errorMessage.className = 'video-error';
     errorMessage.innerHTML = `
-      <div style="text-align: center; color: white; padding: 20px;">
-        <p>Video could not be loaded.</p>
-        <p>Please try refreshing the page.</p>
+      <div style="text-align: center; color: white; padding: 20px; background: rgba(0,0,0,0.8); border-radius: 8px;">
+        <p style="margin: 0 0 10px 0; font-size: 16px;">⚠️ Video could not be loaded</p>
+        <p style="margin: 0; font-size: 14px; opacity: 0.8;">Please try refreshing the page or check your internet connection.</p>
       </div>
     `;
     customVideoPlayer.appendChild(errorMessage);
+    
+    // Hide the play button overlay if there's an error
+    playPauseOverlay.style.display = 'none';
+  });
+
+  // Add a loading state
+  video.addEventListener('loadstart', () => {
+    // Video is starting to load
+    console.log('Video loading started');
+  });
+
+  video.addEventListener('canplay', () => {
+    // Video can start playing
+    console.log('Video can play');
+    // Remove any error messages
+    const errorMessage = customVideoPlayer.querySelector('.video-error');
+    if (errorMessage) {
+      errorMessage.remove();
+    }
   });
 
   video.addEventListener('ended', () => {
