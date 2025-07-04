@@ -183,17 +183,30 @@ document.addEventListener('DOMContentLoaded', () => {
   // Toggle play/pause
   function togglePlay() {
     if (video.paused) {
-      video.play();
-      isPlaying = true;
-      hasPlayedOnce = true;
-      playPauseOverlay.classList.add('hidden');
-      videoControls.classList.remove('paused');
-      document.querySelector('.play-icon').style.display = 'none';
-      document.querySelector('.pause-icon').style.display = 'block';
+      const playPromise = video.play();
       
-      // Remove poster after first play to prevent it from showing again
-      if (hasPlayedOnce) {
-        video.removeAttribute('poster');
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          isPlaying = true;
+          hasPlayedOnce = true;
+          playPauseOverlay.classList.add('hidden');
+          videoControls.classList.remove('paused');
+          document.querySelector('.play-icon').style.display = 'none';
+          document.querySelector('.pause-icon').style.display = 'block';
+          
+          // Remove poster after first play to prevent it from showing again
+          if (hasPlayedOnce) {
+            video.removeAttribute('poster');
+          }
+        }).catch(error => {
+          console.log('Play was prevented:', error);
+          // Reset UI state if play fails
+          isPlaying = false;
+          playPauseOverlay.classList.remove('hidden');
+          videoControls.classList.add('paused');
+          document.querySelector('.play-icon').style.display = 'block';
+          document.querySelector('.pause-icon').style.display = 'none';
+        });
       }
     } else {
       video.pause();
@@ -345,6 +358,23 @@ document.addEventListener('DOMContentLoaded', () => {
   video.addEventListener('loadedmetadata', () => {
     durationDisplay.textContent = formatTime(video.duration);
     currentTimeDisplay.textContent = formatTime(0);
+  });
+
+  // Add error handling for video loading
+  video.addEventListener('error', (e) => {
+    console.log('Video error:', e);
+    console.log('Video error code:', video.error ? video.error.code : 'unknown');
+    
+    // Show a user-friendly error message
+    const errorMessage = document.createElement('div');
+    errorMessage.className = 'video-error';
+    errorMessage.innerHTML = `
+      <div style="text-align: center; color: white; padding: 20px;">
+        <p>Video could not be loaded.</p>
+        <p>Please try refreshing the page.</p>
+      </div>
+    `;
+    customVideoPlayer.appendChild(errorMessage);
   });
 
   video.addEventListener('ended', () => {
